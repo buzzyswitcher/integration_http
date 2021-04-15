@@ -12,7 +12,18 @@
        https://www.springframework.org/schema/integration/http/spring-integration-http.xsd">
 
     <int:channel id="httpChannel"/>
-    
+    <int:channel id="httpOutboundChannel"/>
+
+    <int:gateway service-interface="ru.volkov.integration.http.SimpleGateway"
+                 default-request-channel="httpOutboundChannel"/>
+
+    <int-http:outbound-channel-adapter
+            channel="httpOutboundChannel"
+            http-method="GET"
+            url="http://localhost:8080/">
+
+    </int-http:outbound-channel-adapter>
+
     <int-http:inbound-gateway
             request-channel="httpChannel"
             supported-methods="GET"
