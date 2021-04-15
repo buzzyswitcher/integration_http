@@ -12,14 +12,15 @@
        https://www.springframework.org/schema/integration/http/spring-integration-http.xsd">
 
     <int:channel id="httpChannel"/>
+    
+    <int-http:inbound-gateway
+            request-channel="httpChannel"
+            supported-methods="GET"
+            path="/">
 
-    <int-http:inbound-channel-adapter
-        path="/"
-        supported-methods="GET"
-        channel="httpChannel">
-    </int-http:inbound-channel-adapter>
+    </int-http:inbound-gateway>
 
     <bean id="messagePrinter" class="ru.volkov.integration.http.MessagePrinter"/>
 
-    <int:service-activator ref="messagePrinter" method="printConsole" input-channel="httpChannel"/>
+    <int:service-activator ref="messagePrinter" method="print" input-channel="httpChannel"/>
 </beans>
